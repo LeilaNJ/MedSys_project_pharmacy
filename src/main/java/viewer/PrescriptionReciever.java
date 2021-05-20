@@ -27,11 +27,12 @@ public class PrescriptionReciever {
         int port = 5647;
         HapiContext ctx = new DefaultHapiContext();
         server = ctx.newServer(port, false);
-
+        System.out.println("hallå");
         ReceivingApplication<Message> handler = new RGVReceiverApplication();
         server.registerApplication("RGV", "O01", handler);
         
         try {
+            System.out.println("hej"); 
             server.startAndWait();
         } catch (InterruptedException ex) {
             Logger.getLogger(HL7Services.class.getName()).log(Level.SEVERE, null, ex);

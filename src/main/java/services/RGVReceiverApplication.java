@@ -48,16 +48,19 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
 
     @Override
     public Message processMessage(Message t, Map<String, Object> map) throws ReceivingApplicationException, HL7Exception {
+        System.out.println("hej"); 
+        String encodedMessage = new DefaultHapiContext().getPipeParser().encode(t);
+        System.out.println("Received message:\n" + encodedMessage + "\n\n");
         
         // Recovery RGV_O01
         RGV_O01 rgv = (RGV_O01) t;
         
-        /*
+        
         // Recovery PID Segment
         PID pid = rgv.getPATIENT().getPID();
         String idpatient = pid.getPatientIDInternalID(0).getID().getValue();
-        String firstName = pid.getPatientName(0).getGivenName().getValue(); 
-        String lastName = pid.getPatientName(0).getFamilyName().getValue(); 
+        //String firstName = pid.getPatientName(0).getGivenName().getValue(); 
+        //String lastName = pid.getPatientName(0).getFamilyName().getValue(); 
         
         System.out.println("PID"); 
         
@@ -67,9 +70,9 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         String idprescription = orc.getOrc1_OrderControl().getValue();
         Date datepresc = orc.getOrc9_DateTimeOfTransaction().getTimeOfAnEvent().getValueAsDate();
         String iddoctor = orc.getOrc10_EnteredBy().getIDNumber().getValue();
-        String dr_firstName = orc.getOrc10_EnteredBy().getGivenName().getValue();
-        String dr_lastName = orc.getOrc10_EnteredBy().getFamilyName().getValue();
-        String signature = orc.getOrc10_EnteredBy().getIdentifierCheckDigit().getValue();
+        //String dr_firstName = orc.getOrc10_EnteredBy().getGivenName().getValue();
+        //String dr_lastName = orc.getOrc10_EnteredBy().getFamilyName().getValue();
+        //String signature = orc.getOrc10_EnteredBy().getIdentifierCheckDigit().getValue();
         Date deliverydate =orc.getOrc15_OrderEffectiveDateTime().getTimeOfAnEvent().getValueAsDate();
         System.out.println("ORC"); 
         
@@ -77,7 +80,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         
         RXG rxg = rgv.getPATIENT().getORDER().getGIVE().getRXG();
         String idmedicine = rxg.getGiveCode().getIdentifier().getValue();
-        String med_name = rxg.getGiveCode().getText().getValue(); 
+        //String med_name = rxg.getGiveCode().getText().getValue(); 
         String duration = rxg.getQuantityTiming().getDuration().getValue();
         String intvadmin = rxg.getQuantityTiming().getInterval().getExplicitTimeInterval().getValue();
         String dosage = rxg.getQuantityTiming().getQuantity().getQuantity().getValue();
@@ -92,6 +95,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         Integer intidprescription = Integer.valueOf(idprescription);
         prescription.setIdprescription(intidprescription);
         
+        /*
         Person pat_person = personCtrl.findPersonByFamilyName(lastName); 
         if(pat_person == null){
             pat_person = new Person(); 
@@ -99,7 +103,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             pat_person.setLastname(lastName);
             personCtrl.create(pat_person);
         }
-        
+        */
         System.out.println("Patpers"); 
         
         Integer intidpatient = Integer.valueOf(idpatient);
@@ -107,14 +111,14 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         if(pduplicate == null) {
             Patient patient = new Patient();
             patient.setIdpatient(intidpatient);
-            patient.setPerson(pat_person);
+            //patient.setPerson(pat_person);
             prescription.setPatient(patient);
             patientCtrl.create(patient); 
         }
         else{
             prescription.setPatient(pduplicate);
         }
-        
+        /*
         Person dr_person = personCtrl.findPersonByFamilyName(dr_lastName); 
         if(dr_person == null){
             dr_person = new Person(); 
@@ -122,13 +126,14 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             dr_person.setLastname(dr_lastName);
             personCtrl.create(dr_person);
         }
+*/
         System.out.println("Drpers");
         Integer intiddoctor = Integer.valueOf(iddoctor); 
         Doctor dduplicate = doctorCtrl.findDoctor(intiddoctor);
         if(dduplicate == null) {
             Doctor doctor = new Doctor();
             doctor.setIddoctor(intiddoctor);
-            doctor.setPerson(dr_person); 
+            //doctor.setPerson(dr_person); 
             prescription.setDoctor(doctor);
             doctorCtrl.create(doctor);
         }
@@ -141,7 +146,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         if(mduplicate == null) {
             Medicine medicine = new Medicine();
             medicine.setIdmedicine(intidmedicine);
-            medicine.setName(med_name); 
+            //medicine.setName(med_name); 
             prescription.setMedicine(medicine);
             medicineCtrl.create(medicine);
         }
@@ -149,7 +154,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             prescription.setMedicine(mduplicate);
         }
         
-        prescription.setSignature(signature);
+        //prescription.setSignature(signature);
         
         prescription.setDatePresc(datepresc);
         
@@ -170,8 +175,8 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         prescCtrl.create(prescription);
         
         //Final messsage
-        */
-        String encodedMessage = new DefaultHapiContext().getPipeParser().encode(t);
+        
+        //String encodedMessage = new DefaultHapiContext().getPipeParser().encode(t);
         System.out.println("Received message:\n" + encodedMessage + "\n\n");
         // Now generate a simple acknowledgment message and return it
         try {
