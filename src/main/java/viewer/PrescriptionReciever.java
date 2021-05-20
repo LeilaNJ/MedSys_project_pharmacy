@@ -5,11 +5,12 @@
  */
 package viewer;
 
-import Services.HL7Services;
+import services.HL7Services;
 import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.app.HL7Service;
 import ca.uhn.hl7v2.model.Message;
+import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.protocol.ReceivingApplication;
 import java.util.logging.Level;
 import java.util.logging.Logger; 
@@ -29,7 +30,7 @@ public class PrescriptionReciever {
 
         ReceivingApplication<Message> handler = new RGVReceiverApplication();
         server.registerApplication("RGV", "O01", handler);
-
+        
         try {
             server.startAndWait();
         } catch (InterruptedException ex) {
