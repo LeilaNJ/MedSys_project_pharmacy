@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 20, 2021 at 10:53 AM
+-- Generation Time: May 20, 2021 at 05:39 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `doctor` (
   `iddoctor` int(11) NOT NULL,
   `Person` int(11) NOT NULL,
-  `INAMInbr` int(11) NOT NULL
+  `INAMInbr` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -41,10 +41,9 @@ CREATE TABLE `doctor` (
 
 CREATE TABLE `medicine` (
   `idmedicine` int(11) NOT NULL,
-  `FirstName` varchar(255) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `Company` varchar(255) NOT NULL,
-  `Activesubstance` varchar(255) NOT NULL
+  `Name` varchar(255) NOT NULL,
+  `Company` varchar(255) DEFAULT NULL,
+  `Activesubstance` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -56,7 +55,7 @@ CREATE TABLE `medicine` (
 CREATE TABLE `patient` (
   `idpatient` int(11) NOT NULL,
   `Person` int(11) NOT NULL,
-  `Agegroup` int(11) NOT NULL
+  `Agegroup` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -69,11 +68,11 @@ CREATE TABLE `person` (
   `idperson` int(11) NOT NULL,
   `FirstName` varchar(255) NOT NULL,
   `Lastname` varchar(255) NOT NULL,
-  `BirthDay` date NOT NULL,
-  `Adress` varchar(255) NOT NULL,
-  `PhoneNumber` varchar(255) NOT NULL,
-  `EmailAdd` varchar(255) NOT NULL,
-  `NISS` int(11) NOT NULL
+  `BirthDay` date DEFAULT NULL,
+  `Adress` varchar(255) DEFAULT NULL,
+  `PhoneNumber` varchar(255) DEFAULT NULL,
+  `EmailAdd` varchar(255) DEFAULT NULL,
+  `NISS` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
