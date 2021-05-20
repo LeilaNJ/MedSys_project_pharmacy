@@ -2,10 +2,10 @@
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : sam. 15 mai 2021 à 17:53
--- Version du serveur :  10.4.17-MariaDB
--- Version de PHP : 8.0.1
+-- Host: localhost
+-- Generation Time: May 20, 2021 at 10:53 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `db_pharmacy`
+-- Database: `db_pharmacy`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `doctor`
+-- Table structure for table `doctor`
 --
 
 CREATE TABLE `doctor` (
@@ -36,7 +36,7 @@ CREATE TABLE `doctor` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `medicine`
+-- Table structure for table `medicine`
 --
 
 CREATE TABLE `medicine` (
@@ -50,7 +50,7 @@ CREATE TABLE `medicine` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `patient`
+-- Table structure for table `patient`
 --
 
 CREATE TABLE `patient` (
@@ -62,7 +62,7 @@ CREATE TABLE `patient` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `person`
+-- Table structure for table `person`
 --
 
 CREATE TABLE `person` (
@@ -79,7 +79,7 @@ CREATE TABLE `person` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `pharmacist`
+-- Table structure for table `pharmacist`
 --
 
 CREATE TABLE `pharmacist` (
@@ -91,7 +91,7 @@ CREATE TABLE `pharmacist` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `prescription`
+-- Table structure for table `prescription`
 --
 
 CREATE TABLE `prescription` (
@@ -99,20 +99,20 @@ CREATE TABLE `prescription` (
   `Patient` int(11) NOT NULL,
   `Doctor` int(11) NOT NULL,
   `Medicine` int(11) NOT NULL,
-  `signature` text NOT NULL,
-  `DatePresc` date NOT NULL,
-  `DateDelivery` date NOT NULL,
-  `Dosage` int(255) NOT NULL,
-  `FreqAdministration` varchar(255) NOT NULL,
-  `Duration of Treatment` varchar(255) NOT NULL,
-  `Form of Administration` varchar(255) NOT NULL,
-  `Renewable` binary(255) NOT NULL
+  `signature` text DEFAULT NULL,
+  `DatePresc` date DEFAULT NULL,
+  `DateDelivery` date DEFAULT NULL,
+  `Dosage` int(255) DEFAULT NULL,
+  `FreqAdministration` varchar(255) DEFAULT NULL,
+  `Duration_of_Treatment` varchar(255) DEFAULT NULL,
+  `Form_of_Administration` varchar(255) DEFAULT NULL,
+  `Renewable` binary(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -123,44 +123,44 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `doctor`
+-- Indexes for table `doctor`
 --
 ALTER TABLE `doctor`
   ADD PRIMARY KEY (`iddoctor`),
   ADD KEY `Doctor_fk0` (`Person`);
 
 --
--- Index pour la table `medicine`
+-- Indexes for table `medicine`
 --
 ALTER TABLE `medicine`
   ADD PRIMARY KEY (`idmedicine`);
 
 --
--- Index pour la table `patient`
+-- Indexes for table `patient`
 --
 ALTER TABLE `patient`
   ADD PRIMARY KEY (`idpatient`),
   ADD KEY `Patient_fk0` (`Person`);
 
 --
--- Index pour la table `person`
+-- Indexes for table `person`
 --
 ALTER TABLE `person`
   ADD PRIMARY KEY (`idperson`);
 
 --
--- Index pour la table `pharmacist`
+-- Indexes for table `pharmacist`
 --
 ALTER TABLE `pharmacist`
   ADD PRIMARY KEY (`idpharmacist`),
   ADD KEY `Pharmacist_fk0` (`Person`);
 
 --
--- Index pour la table `prescription`
+-- Indexes for table `prescription`
 --
 ALTER TABLE `prescription`
   ADD PRIMARY KEY (`idprescription`),
@@ -169,82 +169,82 @@ ALTER TABLE `prescription`
   ADD KEY `Prescription_fk2` (`Medicine`);
 
 --
--- Index pour la table `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`iduser`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `doctor`
+-- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
   MODIFY `iddoctor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `medicine`
+-- AUTO_INCREMENT for table `medicine`
 --
 ALTER TABLE `medicine`
   MODIFY `idmedicine` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `patient`
+-- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
   MODIFY `idpatient` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `person`
+-- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
   MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `pharmacist`
+-- AUTO_INCREMENT for table `pharmacist`
 --
 ALTER TABLE `pharmacist`
   MODIFY `idpharmacist` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `prescription`
+-- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
   MODIFY `idprescription` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `doctor`
+-- Constraints for table `doctor`
 --
 ALTER TABLE `doctor`
   ADD CONSTRAINT `Doctor_fk0` FOREIGN KEY (`Person`) REFERENCES `person` (`idperson`);
 
 --
--- Contraintes pour la table `patient`
+-- Constraints for table `patient`
 --
 ALTER TABLE `patient`
   ADD CONSTRAINT `Patient_fk0` FOREIGN KEY (`Person`) REFERENCES `person` (`idperson`);
 
 --
--- Contraintes pour la table `pharmacist`
+-- Constraints for table `pharmacist`
 --
 ALTER TABLE `pharmacist`
   ADD CONSTRAINT `Pharmacist_fk0` FOREIGN KEY (`Person`) REFERENCES `person` (`idperson`);
 
 --
--- Contraintes pour la table `prescription`
+-- Constraints for table `prescription`
 --
 ALTER TABLE `prescription`
   ADD CONSTRAINT `Prescription_fk0` FOREIGN KEY (`Patient`) REFERENCES `patient` (`idpatient`),
