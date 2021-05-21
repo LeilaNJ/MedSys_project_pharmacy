@@ -138,8 +138,10 @@ public class PersonJpaController implements Serializable {
     public Person findPersonByFamilyName(String lastName){
         EntityManager em = getEntityManager();
         List<Person> persons = em.createNamedQuery("Person.findByLastname").setParameter("lastname", lastName).getResultList();
-       
-        return persons.get(0);
+        if (persons.isEmpty()){
+            return null; 
+        }
+        else return persons.get(0);
     }
     
 }

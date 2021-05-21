@@ -59,8 +59,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         String idpatient = pid.getPatientIDInternalID(0).getID().getValue();
         String firstName = pid.getPatientName(0).getGivenName().getValue(); 
         String lastName = pid.getPatientName(0).getFamilyName().getValue(); 
-        
-        System.out.println("PID"); 
+         
         
         // Recovery ORC Order
                 
@@ -72,7 +71,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         String dr_lastName = orc.getOrc10_EnteredBy().getFamilyName().getValue();
         String signature = orc.getOrc10_EnteredBy().getIdentifierCheckDigit().getValue();
         Date deliverydate =orc.getOrc15_OrderEffectiveDateTime().getTimeOfAnEvent().getValueAsDate();
-        System.out.println("ORC"); 
+
         
         // ORDER GIVE
         
@@ -84,7 +83,6 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         String dosage = rxg.getQuantityTiming().getQuantity().getQuantity().getValue();
         String renewable = rxg.getQuantityTiming().getOrderSequencing().getCm_osd7_MaximumNumberOfRepeats().getValue();
         String adminform = rxg.getGiveDosageForm().getText().getValue();
-        System.out.println("GIVE"); 
         
         // Add the values in the DB
         
@@ -93,7 +91,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         Integer intidprescription = Integer.valueOf(idprescription);
         prescription.setIdprescription(intidprescription);
         
-        
+         
         Person pat_person = personCtrl.findPersonByFamilyName(lastName); 
         if(pat_person == null){
             pat_person = new Person(); 
@@ -102,7 +100,6 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             personCtrl.create(pat_person);
         }
         
-        System.out.println("Patpers"); 
         
         Integer intidpatient = Integer.valueOf(idpatient);
         Patient pduplicate = patientCtrl.findPatient(intidpatient);
@@ -125,7 +122,6 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             personCtrl.create(dr_person);
         }
 
-        System.out.println("Drpers");
         Integer intiddoctor = Integer.valueOf(iddoctor); 
         Doctor dduplicate = doctorCtrl.findDoctor(intiddoctor);
         if(dduplicate == null) {
