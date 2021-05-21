@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 20, 2021 at 05:39 PM
+-- Generation Time: May 21, 2021 at 02:28 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -33,6 +33,7 @@ CREATE TABLE `doctor` (
   `INAMInbr` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +47,7 @@ CREATE TABLE `medicine` (
   `Activesubstance` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 -- --------------------------------------------------------
 
 --
@@ -57,6 +59,7 @@ CREATE TABLE `patient` (
   `Person` int(11) NOT NULL,
   `Agegroup` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- --------------------------------------------------------
 
@@ -74,6 +77,10 @@ CREATE TABLE `person` (
   `EmailAdd` varchar(255) DEFAULT NULL,
   `NISS` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `person`
+--
 
 -- --------------------------------------------------------
 
@@ -182,25 +189,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `iddoctor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `iddoctor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `medicine`
 --
 ALTER TABLE `medicine`
-  MODIFY `idmedicine` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmedicine` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `idpatient` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idpatient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pharmacist`
@@ -212,7 +219,7 @@ ALTER TABLE `pharmacist`
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
-  MODIFY `idprescription` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idprescription` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
