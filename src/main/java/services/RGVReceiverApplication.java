@@ -50,6 +50,10 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
     public Message processMessage(Message t, Map<String, Object> map) throws ReceivingApplicationException, HL7Exception {
 
         
+        String encodedMessage = new DefaultHapiContext().getPipeParser().encode(t);
+        System.out.println("Received a new message:\n" + encodedMessage + "\n\n");
+        
+        
         // Recovery RGV_O01
         RGV_O01 rgv = (RGV_O01) t;
         
@@ -58,7 +62,9 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         PID pid = rgv.getPATIENT().getPID();
         String idpatient = pid.getPatientIDInternalID(0).getID().getValue();
         String firstName = pid.getPatientName(0).getGivenName().getValue(); 
-        String lastName = pid.getPatientName(0).getFamilyName().getValue(); 
+        String lastName = pid.getPatientName(0).getFamilyName().getValue();
+        int niss = Integer.parseInt(pid.getPatientIDExternalID().getID().getValue()); 
+        Date dob = pid.getDateOfBirth().getTimeOfAnEvent().getValueAsDate(); 
          
         
         // Recovery ORC Order
@@ -78,6 +84,7 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         RXG rxg = rgv.getPATIENT().getORDER().getGIVE().getRXG();
         String idmedicine = rxg.getGiveCode().getIdentifier().getValue();
         String med_name = rxg.getGiveCode().getText().getValue(); 
+        String company = rxg.getGiveCode().getAlternateText().getValue(); 
         String duration = rxg.getQuantityTiming().getDuration().getValue();
         String intvadmin = rxg.getQuantityTiming().getInterval().getExplicitTimeInterval().getValue();
         String dosage = rxg.getQuantityTiming().getQuantity().getQuantity().getValue();
@@ -97,6 +104,8 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
             pat_person = new Person(); 
             pat_person.setFirstName(firstName);
             pat_person.setLastname(lastName);
+            pat_person.setBirthDay(dob);
+            pat_person.setNiss(niss);
             personCtrl.create(pat_person);
         }
         
@@ -140,7 +149,8 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         if(mduplicate == null) {
             Medicine medicine = new Medicine();
             medicine.setIdmedicine(intidmedicine);
-            medicine.setName(med_name); 
+            medicine.setName(med_name);
+            medicine.setCompany(company); 
             prescription.setMedicine(medicine);
             medicineCtrl.create(medicine);
         }
@@ -167,12 +177,8 @@ public class RGVReceiverApplication implements ReceivingApplication<Message> {
         prescription.setRenewable(brenewable);
         
         prescCtrl.create(prescription);
+        System.out.println(prescription.toString()+" saved to database."); 
         
-        //Final messsage
-        
-        String encodedMessage = new DefaultHapiContext().getPipeParser().encode(t);
-        System.out.println("Received a new message:\n" + encodedMessage + "\n\n");
-        // Now generate a simple acknowledgment message and return it
         try {
         	return t.generateACK();
         } catch (IOException e) {

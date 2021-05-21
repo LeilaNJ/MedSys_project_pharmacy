@@ -209,7 +209,7 @@ public class Prescription implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Prescription[ idprescription=" + idprescription + " ]";
+        return "Prescription for "+ medicine.getName() +" to "+ patient.getPerson().getFirstName() +" "+ patient.getPerson().getLastname()+ " prescribed by Dr." + doctor.getPerson().getFirstName()+ " "+doctor.getPerson().getLastname();
     }
 
     public Integer getDosage() {
