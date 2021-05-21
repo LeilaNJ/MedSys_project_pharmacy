@@ -3,6 +3,11 @@
   <persistence-unit name="pharmacy" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>model.Pharmacist</class>
+    <class>model.Person</class>
+    <class>model.Patient</class>
+    <class>model.Doctor</class>
+    <class>model.Medicine</class>
+    <class>model.Prescription</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_pharmacy?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=Europe/Brussels"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

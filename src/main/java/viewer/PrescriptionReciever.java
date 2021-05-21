@@ -5,7 +5,7 @@
  */
 package viewer;
 
-import Services.HL7Services;
+import services.HL7Services;
 import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.app.HL7Service;
@@ -26,10 +26,9 @@ public class PrescriptionReciever {
         int port = 5647;
         HapiContext ctx = new DefaultHapiContext();
         server = ctx.newServer(port, false);
-
         ReceivingApplication<Message> handler = new RGVReceiverApplication();
         server.registerApplication("RGV", "O01", handler);
-
+        
         try {
             server.startAndWait();
         } catch (InterruptedException ex) {
